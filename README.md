@@ -1,5 +1,6 @@
 # Matrix
 
-'''
-Auteur: Rayan benlacheheb Antoine Poidevin
-'''
+
+```
+Auteur: Rayan Benlacheheb et Antoine Poidevin ©
+```
