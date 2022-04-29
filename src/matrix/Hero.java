@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Hero {
 	private String nom;
-	private List<Ressources> ble;
-	private List<Ressources> bois;
+	private List<Ressource> ble;
+	private List<Ressource> bois;
 	private Pierre pierre;
 	private ObjetManufacture farine;
 	private ObjetManufacture feu;
@@ -16,8 +16,8 @@ public class Hero {
 	public Hero(String nom) {
 		this.nom = nom;
 		
-		this.ble = new ArrayList<Ressources>();
-		this.bois = new ArrayList<Ressources>();
+		this.ble = new ArrayList<Ressource>();
+		this.bois = new ArrayList<Ressource>();
 		
 		this.pierre = null;
 		this.farine = null;
@@ -31,7 +31,23 @@ public class Hero {
 		position[1] = 0;
 	}
 	
+	public void seDeplacer(Direction direction) {
+		
+	}
 	
+	public void prendre() {
+		
+	}
+	
+	public void jeter(Ressource r) {
+		
+	}
+	
+	public boolean fairePain() {
+		boolean resultat = true;
+		
+		return resultat;
+	}
 	
 	
 	
@@ -41,16 +57,16 @@ public class Hero {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public List<Ressources> getBle() {
+	public List<Ressource> getBle() {
 		return ble;
 	}
-	public void setBle(List<Ressources> ble) {
+	public void setBle(List<Ressource> ble) {
 		this.ble = ble;
 	}
-	public List<Ressources> getBois() {
+	public List<Ressource> getBois() {
 		return bois;
 	}
-	public void setBois(List<Ressources> bois) {
+	public void setBois(List<Ressource> bois) {
 		this.bois = bois;
 	}
 	public Pierre getPierre() {

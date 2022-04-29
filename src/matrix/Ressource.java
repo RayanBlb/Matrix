@@ -1,11 +1,11 @@
 package matrix;
 
-public class Ressources {
+public class Ressource {
 
 	private int poids;
 	private String id;
 
-	public Ressources(int poids, String id) {
+	public Ressource(int poids, String id) {
 		this.poids = poids;
 		this.id = id;
 		

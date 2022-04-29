@@ -1,6 +1,6 @@
 package matrix;
 
-public class Pierre extends Ressources {
+public class Pierre extends Ressource {
 
 	public Pierre(String id) {
 		super(3, id);
