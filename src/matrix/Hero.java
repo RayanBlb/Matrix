@@ -105,7 +105,7 @@ public class Hero {
 				throw new ErreurNbPierreException(r);
 			}
 		} else if (r instanceof Bois) {
-			if (bois.size() <= 4 && farine != null) {
+			if (bois.size() <= 4) {
 				bois.add(r);
 				poids += r.getPoids();
 				if (poids > 13) {

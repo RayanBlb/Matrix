@@ -27,6 +27,8 @@ public class Jeu {
 			personnage.faireFarine();
 		} else if (personnage.getBois().size() >= 5) {
 			personnage.faireFeu();
+		}else if(personnage.getPierre() != null && personnage.getFarine() != null) {
+			personnage.jeter(personnage.getPierre());
 		}
 
 		try {
