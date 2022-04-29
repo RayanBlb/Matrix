@@ -105,7 +105,7 @@ public class Hero {
 				throw new ErreurNbPierreException(r);
 			}
 		} else if (r instanceof Bois) {
-			if (bois.size() <= 4) {
+			if (bois.size() <= 4 && farine != null) {
 				bois.add(r);
 				poids += r.getPoids();
 				if (poids > 13) {
@@ -136,13 +136,13 @@ public class Hero {
 			if (pierre != null) {
 				pierre = null;
 				poids -= r.getPoids();
-			} else if (r instanceof Bois) {
-				bois.remove(bois.size() - 1);
-				poids -= r.getPoids();
-			} else if (r instanceof Ble) {
-				ble.remove(ble.size() - 1);
-				poids -= r.getPoids();
 			}
+		} else if (r instanceof Bois) {
+			bois.remove(bois.size() - 1);
+			poids -= r.getPoids();
+		} else if (r instanceof Ble) {
+			ble.remove(ble.size() - 1);
+			poids -= r.getPoids();
 		}
 	}
 

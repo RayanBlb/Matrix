@@ -17,10 +17,10 @@ public class Jeu {
 	}
 
 	public void jouer() {
-		deplacementPersonnage();
+		deplacementJoueur();
 	}
 
-	public void algoCheck() {
+	public void comportementJoueur() {
 		int[] coordonnee = personnage.getPosition();
 
 		if (personnage.getBle().size() >= 10) {
@@ -38,10 +38,10 @@ public class Jeu {
 		} catch (ErreurNbBoisException e) {
 		} catch (ErreurNbBleException e) {
 		}
-
+		map[coordonnee[0]][coordonnee[1]] = null;
 	}
 
-	public void deplacementPersonnage() {
+	public void deplacementJoueur() {
 		for (int y = 0; y <= 9; y++) {
 
 			for (int x = 0; x <= 9; x++) {
@@ -49,7 +49,7 @@ public class Jeu {
 				if (y % 2 == 0) {
 
 					try {
-						algoCheck();
+						comportementJoueur();
 						personnage.debugPersonnage();
 						personnage.seDeplacer(Direction.DROITE);
 					} catch (Exception e) {
@@ -58,7 +58,7 @@ public class Jeu {
 				} else {
 
 					try {
-						algoCheck();
+						comportementJoueur();
 						personnage.debugPersonnage();
 						personnage.seDeplacer(Direction.GAUCHE);
 					} catch (Exception e) {
