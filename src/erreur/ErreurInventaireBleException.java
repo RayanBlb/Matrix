@@ -2,12 +2,13 @@ package erreur;
 
 import matrix.Ressource;
 
-public class ErreurInventaireException extends Exception{
+public class ErreurInventaireBleException extends Exception{
+
 	private static final long serialVersionUID = 1L;
 
 	private Ressource ressource;
-	
-	public ErreurInventaireException(Ressource r) {
+
+	public ErreurInventaireBleException(Ressource r) {
 		super();
 		this.ressource = r;
 	}
@@ -15,5 +16,5 @@ public class ErreurInventaireException extends Exception{
 	public Ressource getRessource() {
 		return ressource;
 	}
-	
+
 }

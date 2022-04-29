@@ -3,7 +3,8 @@ package matrix;
 public class Main {
 
 	public static void main(String[] args) {
-		Jeu.jouer(Terrain.creationTerrain());
+		Jeu jeu = new Jeu("Jean",Terrain.creationTerrain());
+		jeu.jouer();
 	}
 
 }
