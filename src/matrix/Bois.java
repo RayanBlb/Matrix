@@ -6,5 +6,5 @@ public class Bois extends Ressources {
 		super(2, id);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 }
