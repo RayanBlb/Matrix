@@ -3,6 +3,9 @@ package matrix;
 import erreur.ErreurInventaireBleException;
 import erreur.ErreurInventaireBoisException;
 import erreur.ErreurInventairePierreException;
+import erreur.ErreurNbBleException;
+import erreur.ErreurNbBoisException;
+import erreur.ErreurNbPierreException;
 
 public class Jeu {
 	private Hero personnage;
@@ -20,23 +23,22 @@ public class Jeu {
 	public void algoCheck() {
 		int[] coordonnee = personnage.getPosition();
 
+		if (personnage.getBle().size() >= 10) {
+			personnage.faireFarine();
+		} else if (personnage.getBois().size() >= 5) {
+			personnage.faireFeu();
+		}
+
 		try {
 			personnage.prendre(map[coordonnee[0]][coordonnee[1]]);
 		} catch (ErreurInventairePierreException e) {
-			
 		} catch (ErreurInventaireBoisException e) {
-			try {
-				personnage.faireFeu();
-			} catch (Exception z) {
-
-			}
 		} catch (ErreurInventaireBleException e) {
-			try {
-				personnage.faireFarine();
-			} catch (Exception z) {
-
-			}
+		} catch (ErreurNbPierreException e) {
+		} catch (ErreurNbBoisException e) {
+		} catch (ErreurNbBleException e) {
 		}
+
 	}
 
 	public void deplacementPersonnage() {
@@ -47,7 +49,8 @@ public class Jeu {
 				if (y % 2 == 0) {
 
 					try {
-						personnage.debugCoordonnee();
+						algoCheck();
+						personnage.debugPersonnage();
 						personnage.seDeplacer(Direction.DROITE);
 					} catch (Exception e) {
 					}
@@ -55,7 +58,8 @@ public class Jeu {
 				} else {
 
 					try {
-						personnage.debugCoordonnee();
+						algoCheck();
+						personnage.debugPersonnage();
 						personnage.seDeplacer(Direction.GAUCHE);
 					} catch (Exception e) {
 					}
