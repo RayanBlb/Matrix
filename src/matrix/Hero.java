@@ -2,7 +2,8 @@ package matrix;
 
 import java.util.*;
 
-import erreur.PlaceManquanteInventaireException;
+import erreur.ErreurDeplacementException;
+import erreur.ErreurInventaireException;
 
 public class Hero {
 	private String nom;
@@ -33,34 +34,50 @@ public class Hero {
 		position[1] = 0;
 	}
 
-	public void seDeplacer(Direction direction) {
+	public void seDeplacer(Direction direction) throws ErreurDeplacementException {
 		switch(direction) {
 		case HAUT:
-			position[0] -= 1; 
+			position[0] -= 1;
+			if(position[0] < 0) {
+				position[0] += 1;
+				throw new ErreurDeplacementException(direction);
+			}
 			break;
 		case BAS:
-			position[0] += 1; 
+			position[0] += 1;
+			if(position[0] > 9) {
+				position[0] -= 1;
+				throw new ErreurDeplacementException(direction);
+			}
 			break;
 		case GAUCHE:
-			position[1] += 1; 
+			position[1] -= 1;
+			if(position[1] < 0) {
+				position[1] += 1;
+				throw new ErreurDeplacementException(direction);
+			}
 			break;
 		case DROITE:
-			position[1] -= 1; 
+			position[1] += 1;
+			if(position[1] > 9) {
+				position[1] -= 1;
+				throw new ErreurDeplacementException(direction);
+			}
 			break;
 		}
 	}
 	
-	public void prendre(Ressource r) throws PlaceManquanteInventaireException {
+	public void prendre(Ressource r) throws ErreurInventaireException {
 		if(r instanceof Pierre) {
 			if(pierre == null) {
 				pierre = new Pierre("pierre");
 				poids += 3;
 				if (poids > 13) {
 					poids -= 3;
-					throw new PlaceManquanteInventaireException(r);
+					throw new ErreurInventaireException(r);
 				}
 			}else{
-				throw new PlaceManquanteInventaireException(r);
+				throw new ErreurInventaireException(r);
 			}
 		}else if(r instanceof Bois) {
 			if(bois.size() <= 4) {
@@ -68,10 +85,10 @@ public class Hero {
 				poids += 2;
 				if (poids > 13) {
 					poids -= 2;
-					throw new PlaceManquanteInventaireException(r);
+					throw new ErreurInventaireException(r);
 				}
 			}else {
-				throw new PlaceManquanteInventaireException(r);
+				throw new ErreurInventaireException(r);
 			}
 		}else if(r instanceof Ble) {
 			if(ble.size() <= 9) {
@@ -79,10 +96,10 @@ public class Hero {
 				poids += 1;
 				if (poids > 13) {
 					poids -= 1;
-					throw new PlaceManquanteInventaireException(r);
+					throw new ErreurInventaireException(r);
 				}
 			}else {
-				throw new PlaceManquanteInventaireException(r);
+				throw new ErreurInventaireException(r);
 			}
 		}
 	}
@@ -111,6 +128,22 @@ public class Hero {
 			resultat = false;
 		}
 		return resultat;
+	}
+	
+	public void faireFarine() {
+		if(ble.size() == 10) {
+			suppressionList(ble);
+			farine = new ObjetManufacture("farine");
+			poids -= 10;
+		}
+	}
+	
+	public void faireFeu() {
+		if(bois.size() == 5) {
+			suppressionList(bois);
+			farine = new ObjetManufacture("feu");
+			poids -= 10;
+		}
 	}
 	
 	public void suppressionList(List<Ressource> liste) {

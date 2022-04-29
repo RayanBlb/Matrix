@@ -2,12 +2,12 @@ package erreur;
 
 import matrix.Ressource;
 
-public class PlaceManquanteInventaireException extends Exception{
-private static final long serialVersionUID = 1L;
+public class ErreurInventaireException extends Exception{
+	private static final long serialVersionUID = 1L;
 
 	private Ressource ressource;
 	
-	public PlaceManquanteInventaireException(Ressource r) {
+	public ErreurInventaireException(Ressource r) {
 		super();
 		this.ressource = r;
 	}
