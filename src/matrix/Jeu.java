@@ -2,7 +2,8 @@ package matrix;
 
 public class Jeu {
 	
-	public void jouer(Ressource[][] map) {
+	public static void jouer(Ressource[][] map) {
+		Hero personnage = new Hero("Jean");
 		
 	}
 
