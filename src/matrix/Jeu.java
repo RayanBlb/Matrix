@@ -6,13 +6,13 @@ import erreur.ErreurInventaireBoisException;
 import outils.Pair;
 
 public class Jeu {
-	private Hero personnage;
+	private Hero joueur;
 	private Ressource[][] map;
 
 	static List<Pair> boisCoordonnee = new ArrayList<Pair>();
 
 	public Jeu(String hero, Ressource[][] map) {
-		personnage = new Hero(hero);
+		joueur = new Hero(hero);
 		this.map = map;
 	}
 
@@ -21,74 +21,80 @@ public class Jeu {
 	}
 
 	public void verificationJoueur() {
-		int[] coordonnee = personnage.getPosition();
+		int[] coordonnee = joueur.getPosition();
 
 		try {
-			personnage.prendre(map[coordonnee[0]][coordonnee[1]]);
+			joueur.prendre(map[coordonnee[0]][coordonnee[1]]);
 			map[coordonnee[0]][coordonnee[1]] = null;
 		} catch (ErreurInventaireBoisException e) {
 			Pair coordoBois = new Pair(coordonnee[0], coordonnee[1]);
 			boisCoordonnee.add(coordoBois);
-		}catch (Exception e) {
-			
-		}
-		
-		if (personnage.getBle().size() >= 10) {
-			personnage.faireFarine();
-		} else if (personnage.getBois().size() >= 5) {
-			personnage.faireFeu();
-		} else if (personnage.getPierre() != null && personnage.getFarine() != null
-				&& map[coordonnee[0]][coordonnee[1]] == null) {
-			personnage.jeter(personnage.getPierre());
-			map[coordonnee[0]][coordonnee[1]] = new Pierre("pierre");
+		} catch (Exception e) {
+
 		}
 
-		personnage.debugPersonnage();
+		if (joueur.getBle().size() >= 10) {
+			joueur.faireFarine();
+		} else if (joueur.getBois().size() >= 5) {
+			joueur.faireFeu();
+		} else if (joueur.getPierre() != null && joueur.getFarine() != null
+				&& map[coordonnee[0]][coordonnee[1]] == null) {
+			joueur.jeter(joueur.getPierre());
+			map[coordonnee[0]][coordonnee[1]] = new Pierre("pierre");
+		}
 	}
 
 	public void deplacementJoueurCoordonnee(int x, int y) {
 
-		if (personnage.getPosition()[0] > x) {
-			while (x != personnage.getPosition()[0]) {
+		if (joueur.getPosition()[0] > x) {
+			while (x != joueur.getPosition()[0]) {
 				try {
-					personnage.seDeplacer(Direction.HAUT);
+					joueur.seDeplacer(Direction.HAUT);
+					affichageTest();
 				} catch (Exception e) {
 				}
 			}
 		} else {
-			while (x != personnage.getPosition()[0]) {
+			while (x != joueur.getPosition()[0]) {
 				try {
-					personnage.seDeplacer(Direction.BAS);
+					joueur.seDeplacer(Direction.BAS);
+					affichageTest();
 				} catch (Exception e) {
 				}
 			}
 		}
 
-		if (personnage.getPosition()[1] > y) {
-			while (y != personnage.getPosition()[1]) {
+		if (joueur.getPosition()[1] > y) {
+			while (y != joueur.getPosition()[1]) {
 				try {
-					personnage.seDeplacer(Direction.GAUCHE);
+					joueur.seDeplacer(Direction.GAUCHE);
+					affichageTest();
 				} catch (Exception e) {
 				}
 			}
 		} else {
-			while (y != personnage.getPosition()[1]) {
+			while (y != joueur.getPosition()[1]) {
 				try {
-					personnage.seDeplacer(Direction.DROITE);
+					joueur.seDeplacer(Direction.DROITE);
+					affichageTest();
 				} catch (Exception e) {
 				}
 			}
 		}
 		verificationJoueur();
 	}
-	
+
 	public void verificationWin() {
-		if(personnage.fairePain() == true && personnage.getPosition()[0] == 9 && personnage.getPosition()[1] == 9) {
-			System.out.println("You win avec : "+personnage.getNbPartie()+" Coups !!!");
+		if (joueur.fairePain() == true && joueur.getPosition()[0] == 9 && joueur.getPosition()[1] == 9) {
+			System.out.println("Pain fabriqué");
+			System.out.println("You win avec : " + joueur.getNbPartie() + " Coups !!!");
 		}
 	}
+
+	/**
+	 * Comportement simple Joueur
+	 */
 	
-	//Comportement 1
 	public void comportementSimpleJoueur() {
 		comportementPremierePhase();
 		comportementDeuxiemePhase();
@@ -104,12 +110,14 @@ public class Jeu {
 
 				if (y % 2 == 0) {
 					try {
-						personnage.seDeplacer(Direction.DROITE);
+						affichageTest();
+						joueur.seDeplacer(Direction.DROITE);
 					} catch (Exception e) {
 					}
 				} else {
 					try {
-						personnage.seDeplacer(Direction.GAUCHE);
+						affichageTest();
+						joueur.seDeplacer(Direction.GAUCHE);
 					} catch (Exception e) {
 					}
 				}
@@ -119,7 +127,8 @@ public class Jeu {
 			verificationJoueur();
 
 			try {
-				personnage.seDeplacer(Direction.BAS);
+				affichageTest();
+				joueur.seDeplacer(Direction.BAS);
 			} catch (Exception e) {
 			}
 
@@ -134,20 +143,57 @@ public class Jeu {
 			deplacementJoueurCoordonnee(x, y);
 		}
 	}
-	
+
 	public void comportementFinalPhase() {
 		deplacementJoueurCoordonnee(9, 9);
 		verificationWin();
 	}
 	
-	//Fin comportement 1
-
-	public Hero getPersonnage() {
-		return personnage;
+	/**
+	 * Fin comportement Simple
+	 */
+	
+	/**
+	 * Affichage
+	 */
+	
+	public void affichageTest() {
+		int positionXJoueur = joueur.getPosition()[0];
+		int positionYJoueur = joueur.getPosition()[1];
+		String affichage = "";
+		
+		for(int y = 0; y <= 9; y++) {
+			for(int i = 0; i <= 9; i++) {
+				if(map[y][i] instanceof Ble && (positionXJoueur != y || positionYJoueur != i)) {
+					affichage = affichage+" B "+" ";
+				}else if(map[y][i] instanceof Ble && positionXJoueur == y && positionYJoueur == i){
+					affichage = affichage+"[B]"+" ";
+				}else if(map[y][i] instanceof Pierre && (positionXJoueur != y || positionYJoueur != i)) {
+					affichage = affichage+" P "+" ";
+				}else if(map[y][i] instanceof Pierre && positionXJoueur == y && positionYJoueur == i) {
+					affichage = affichage+"[P]"+" ";
+				}else if(map[y][i] instanceof Bois && (positionXJoueur != y || positionYJoueur != i)) {
+					affichage = affichage+" W "+" ";
+				}else if(map[y][i] instanceof Bois && positionXJoueur == y && positionYJoueur == i){
+					affichage = affichage+"[W]"+" ";
+				}else if(positionXJoueur == y && positionYJoueur == i){
+					affichage = affichage+"[-]"+" ";
+				}else {
+					affichage = affichage+" - "+" ";
+				}
+			}
+			System.out.println(affichage);
+			affichage = "";
+		}
+		joueur.debugJoueur();
 	}
 
-	public void setPersonnage(Hero personnage) {
-		this.personnage = personnage;
+	public Hero getJoueur() {
+		return joueur;
+	}
+
+	public void setJoueur(Hero joueur) {
+		this.joueur = joueur;
 	}
 
 	public Ressource[][] getMap() {

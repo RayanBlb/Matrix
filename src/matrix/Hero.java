@@ -36,13 +36,12 @@ public class Hero {
 		position[1] = 0;
 	}
 
-	public void debugPersonnage() {
-		System.out.println("----------------------");
-		System.out.println("Size bois : " + bois.size());
-		System.out.println("Size ble : " + ble.size());
-		System.out.println("Poids : " + poids);
+	public void debugJoueur() {
 		System.out.println("nbPartie : " + nbPartie);
-		System.out.println("x : " + position[0] + " y : " + position[1]);
+		System.out.println("Nombre de bois : " + bois.size());
+		System.out.println("Nombre de ble : " + ble.size());
+		System.out.println("Poids : " + poids);
+		System.out.println("x : " + position[0] + " | y : " + position[1]);
 		if (pierre != null) {
 			System.out.println("Pierre OK");
 		}
@@ -52,7 +51,7 @@ public class Hero {
 		if (feu != null) {
 			System.out.println("Feu OK");
 		}
-		System.out.println("----------------------");
+		System.out.println("============================================");
 	}
 
 	public void seDeplacer(Direction direction) throws ErreurDeplacementException {
