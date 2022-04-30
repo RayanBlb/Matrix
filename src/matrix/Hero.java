@@ -3,7 +3,9 @@ package matrix;
 import java.util.*;
 
 import erreur.ErreurDeplacementException;
+import erreur.ErreurInventaireBleException;
 import erreur.ErreurInventaireBoisException;
+import erreur.ErreurInventairePierreException;
 
 public class Hero {
 	private String nom;
@@ -39,6 +41,7 @@ public class Hero {
 		System.out.println("Size bois : " + bois.size());
 		System.out.println("Size ble : " + ble.size());
 		System.out.println("Poids : " + poids);
+		System.out.println("nbPartie : " + nbPartie);
 		System.out.println("x : " + position[0] + " y : " + position[1]);
 		if (pierre != null) {
 			System.out.println("Pierre OK");
@@ -82,16 +85,20 @@ public class Hero {
 		nbPartie += 1;
 	}
 
-	public void prendre(Ressource r) throws ErreurInventaireBoisException{
+	public void prendre(Ressource r) throws ErreurInventaireBoisException,ErreurInventaireBleException,ErreurInventairePierreException{
 		if (r instanceof Ble) {
 			if (ble.size() <= 9) {
 				ble.add(r);
 				poids += r.getPoids();
+			}else {
+				throw new ErreurInventaireBleException(r);
 			}
 		} else if (r instanceof Pierre) {
 			if (pierre == null && farine == null) {
 				pierre = new Pierre("pierre");
 				poids += r.getPoids();
+			}else {
+				throw new ErreurInventairePierreException(r);
 			}
 		} else if (r instanceof Bois) {
 			if (bois.size() <= 4 && farine != null) {

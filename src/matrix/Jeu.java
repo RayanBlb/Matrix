@@ -1,6 +1,8 @@
 package matrix;
 
 import java.util.*;
+
+import erreur.ErreurInventaireBoisException;
 import outils.Pair;
 
 public class Jeu {
@@ -15,26 +17,22 @@ public class Jeu {
 	}
 
 	public void jouer() {
-		deplacementJoueurPermierTour();
-		comportementJoueurDeuxiemeTour();
-		deplacementJoueurDeuxiemeTour(9, 9);
-		if(personnage.fairePain() == true) {
-			System.out.println("You Win : "+personnage.getNbPartie());
-		}
+		comportementSimpleJoueur();
 	}
 
-	public void comportementJoueurDeuxiemeTour() {
-		for (int i = 0; i < boisCoordonnee.size(); i++) {
-			Pair vTempo = boisCoordonnee.get(i);
-			int x = vTempo.getL();
-			int y = vTempo.getR();
-			deplacementJoueurDeuxiemeTour(x, y);
-		}
-	}
-	
-	public void comportementJoueur() {
+	public void verificationJoueur() {
 		int[] coordonnee = personnage.getPosition();
 
+		try {
+			personnage.prendre(map[coordonnee[0]][coordonnee[1]]);
+			map[coordonnee[0]][coordonnee[1]] = null;
+		} catch (ErreurInventaireBoisException e) {
+			Pair coordoBois = new Pair(coordonnee[0], coordonnee[1]);
+			boisCoordonnee.add(coordoBois);
+		}catch (Exception e) {
+			
+		}
+		
 		if (personnage.getBle().size() >= 10) {
 			personnage.faireFarine();
 		} else if (personnage.getBois().size() >= 5) {
@@ -45,43 +43,11 @@ public class Jeu {
 			map[coordonnee[0]][coordonnee[1]] = new Pierre("pierre");
 		}
 
-		try {
-			personnage.prendre(map[coordonnee[0]][coordonnee[1]]);
-			map[coordonnee[0]][coordonnee[1]] = null;
-		} catch (Exception e) {
-			Pair coordoBois = new Pair(coordonnee[0], coordonnee[1]);
-			boisCoordonnee.add(coordoBois);
-		}
 		personnage.debugPersonnage();
 	}
 
-	public void deplacementJoueurPermierTour() {
-		for (int y = 0; y <= 9; y++) {
-			for (int x = 0; x < 9; x++) {
-				if (y % 2 == 0) {
-					try {
-						comportementJoueur();
-						personnage.seDeplacer(Direction.DROITE);
-					} catch (Exception e) {
-					}
-				} else {
-					try {
-						comportementJoueur();
-						personnage.seDeplacer(Direction.GAUCHE);
-					} catch (Exception e) {
-						System.out.println("Tes");
-					}
-				}
-			}
-			try {
-				comportementJoueur();
-				personnage.seDeplacer(Direction.BAS);
-			} catch (Exception e) {
-			}
-		}
-	}
-	
-	public void deplacementJoueurDeuxiemeTour(int x, int y) {
+	public void deplacementJoueurCoordonnee(int x, int y) {
+
 		if (personnage.getPosition()[0] > x) {
 			while (x != personnage.getPosition()[0]) {
 				try {
@@ -89,7 +55,6 @@ public class Jeu {
 				} catch (Exception e) {
 				}
 			}
-			comportementJoueur();
 		} else {
 			while (x != personnage.getPosition()[0]) {
 				try {
@@ -97,28 +62,85 @@ public class Jeu {
 				} catch (Exception e) {
 				}
 			}
-			comportementJoueur();
 		}
 
 		if (personnage.getPosition()[1] > y) {
-			while(y != personnage.getPosition()[1]) {
+			while (y != personnage.getPosition()[1]) {
 				try {
 					personnage.seDeplacer(Direction.GAUCHE);
 				} catch (Exception e) {
 				}
 			}
-			comportementJoueur();
 		} else {
-			while(y != personnage.getPosition()[1]) {
+			while (y != personnage.getPosition()[1]) {
 				try {
 					personnage.seDeplacer(Direction.DROITE);
 				} catch (Exception e) {
 				}
 			}
-			comportementJoueur();
 		}
-		comportementJoueur();
+		verificationJoueur();
 	}
+	
+	public void verificationWin() {
+		if(personnage.fairePain() == true && personnage.getPosition()[0] == 9 && personnage.getPosition()[1] == 9) {
+			System.out.println("You win avec : "+personnage.getNbPartie()+" Coups !!!");
+		}
+	}
+	
+	//Comportement 1
+	public void comportementSimpleJoueur() {
+		comportementPremierePhase();
+		comportementDeuxiemePhase();
+		comportementFinalPhase();
+	}
+
+	public void comportementPremierePhase() {
+		for (int y = 0; y <= 9; y++) {
+
+			for (int x = 0; x < 9; x++) {
+
+				verificationJoueur();
+
+				if (y % 2 == 0) {
+					try {
+						personnage.seDeplacer(Direction.DROITE);
+					} catch (Exception e) {
+					}
+				} else {
+					try {
+						personnage.seDeplacer(Direction.GAUCHE);
+					} catch (Exception e) {
+					}
+				}
+
+			}
+
+			verificationJoueur();
+
+			try {
+				personnage.seDeplacer(Direction.BAS);
+			} catch (Exception e) {
+			}
+
+		}
+	}
+
+	public void comportementDeuxiemePhase() {
+		for (int i = 0; i < boisCoordonnee.size(); i++) {
+			Pair vTempo = boisCoordonnee.get(i);
+			int x = vTempo.getL();
+			int y = vTempo.getR();
+			deplacementJoueurCoordonnee(x, y);
+		}
+	}
+	
+	public void comportementFinalPhase() {
+		deplacementJoueurCoordonnee(9, 9);
+		verificationWin();
+	}
+	
+	//Fin comportement 1
 
 	public Hero getPersonnage() {
 		return personnage;
