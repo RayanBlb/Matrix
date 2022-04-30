@@ -41,7 +41,7 @@ public class Hero {
 		System.out.println("Nombre de bois : " + bois.size());
 		System.out.println("Nombre de ble : " + ble.size());
 		System.out.println("Poids : " + poids);
-		System.out.println("x : " + position[0] + " | y : " + position[1]);
+		System.out.println("L : " + position[0] + " | C : " + position[1]);
 		if (pierre != null) {
 			System.out.println("Pierre OK");
 		}

@@ -44,10 +44,10 @@ public class Jeu {
 		}
 	}
 
-	public void deplacementJoueurCoordonnee(int x, int y) {
+	public void deplacementJoueurCoordonnee(int l, int c) {
 
-		if (joueur.getPosition()[0] > x) {
-			while (x != joueur.getPosition()[0]) {
+		if (joueur.getPosition()[0] > l) {
+			while (l != joueur.getPosition()[0]) {
 				try {
 					joueur.seDeplacer(Direction.HAUT);
 					affichageTest();
@@ -55,7 +55,7 @@ public class Jeu {
 				}
 			}
 		} else {
-			while (x != joueur.getPosition()[0]) {
+			while (l != joueur.getPosition()[0]) {
 				try {
 					joueur.seDeplacer(Direction.BAS);
 					affichageTest();
@@ -64,8 +64,8 @@ public class Jeu {
 			}
 		}
 
-		if (joueur.getPosition()[1] > y) {
-			while (y != joueur.getPosition()[1]) {
+		if (joueur.getPosition()[1] > c) {
+			while (c != joueur.getPosition()[1]) {
 				try {
 					joueur.seDeplacer(Direction.GAUCHE);
 					affichageTest();
@@ -73,7 +73,7 @@ public class Jeu {
 				}
 			}
 		} else {
-			while (y != joueur.getPosition()[1]) {
+			while (c != joueur.getPosition()[1]) {
 				try {
 					joueur.seDeplacer(Direction.DROITE);
 					affichageTest();
@@ -102,13 +102,13 @@ public class Jeu {
 	}
 
 	public void comportementPremierePhase() {
-		for (int y = 0; y <= 9; y++) {
+		for (int l = 0; l <= 9; l++) {
 
-			for (int x = 0; x < 9; x++) {
+			for (int c = 0; c < 9; c++) {
 
 				verificationJoueur();
 
-				if (y % 2 == 0) {
+				if (l % 2 == 0) {
 					try {
 						affichageTest();
 						joueur.seDeplacer(Direction.DROITE);
@@ -138,9 +138,9 @@ public class Jeu {
 	public void comportementDeuxiemePhase() {
 		for (int i = 0; i < boisCoordonnee.size(); i++) {
 			Pair vTempo = boisCoordonnee.get(i);
-			int x = vTempo.getL();
-			int y = vTempo.getR();
-			deplacementJoueurCoordonnee(x, y);
+			int l = vTempo.getL();
+			int c = vTempo.getR();
+			deplacementJoueurCoordonnee(l, c);
 		}
 	}
 
@@ -158,25 +158,25 @@ public class Jeu {
 	 */
 	
 	public void affichageTest() {
-		int positionXJoueur = joueur.getPosition()[0];
-		int positionYJoueur = joueur.getPosition()[1];
+		int positionLJoueur = joueur.getPosition()[0];
+		int positionCJoueur = joueur.getPosition()[1];
 		String affichage = "";
 		
-		for(int y = 0; y <= 9; y++) {
-			for(int i = 0; i <= 9; i++) {
-				if(map[y][i] instanceof Ble && (positionXJoueur != y || positionYJoueur != i)) {
+		for(int l = 0; l <= 9; l++) {
+			for(int c = 0; c <= 9; c++) {
+				if(map[l][c] instanceof Ble && (positionLJoueur != l || positionCJoueur != c)) {
 					affichage = affichage+" B "+" ";
-				}else if(map[y][i] instanceof Ble && positionXJoueur == y && positionYJoueur == i){
+				}else if(map[l][c] instanceof Ble && positionLJoueur == l && positionCJoueur == c){
 					affichage = affichage+"[B]"+" ";
-				}else if(map[y][i] instanceof Pierre && (positionXJoueur != y || positionYJoueur != i)) {
+				}else if(map[l][c] instanceof Pierre && (positionLJoueur != l || positionCJoueur != c)) {
 					affichage = affichage+" P "+" ";
-				}else if(map[y][i] instanceof Pierre && positionXJoueur == y && positionYJoueur == i) {
+				}else if(map[l][c] instanceof Pierre && positionLJoueur == l && positionCJoueur == c) {
 					affichage = affichage+"[P]"+" ";
-				}else if(map[y][i] instanceof Bois && (positionXJoueur != y || positionYJoueur != i)) {
+				}else if(map[l][c] instanceof Bois && (positionLJoueur != l || positionCJoueur != c)) {
 					affichage = affichage+" W "+" ";
-				}else if(map[y][i] instanceof Bois && positionXJoueur == y && positionYJoueur == i){
+				}else if(map[l][c] instanceof Bois && positionLJoueur == l && positionCJoueur == c){
 					affichage = affichage+"[W]"+" ";
-				}else if(positionXJoueur == y && positionYJoueur == i){
+				}else if(positionLJoueur == l && positionCJoueur == c){
 					affichage = affichage+"[-]"+" ";
 				}else {
 					affichage = affichage+" - "+" ";
