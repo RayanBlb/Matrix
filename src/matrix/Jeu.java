@@ -9,6 +9,10 @@ public class Jeu {
 	private Hero joueur;
 	private Ressource[][] map;
 
+	public Hero getJoueur() {
+		return joueur;
+	}
+
 	static List<Pair> boisCoordonnee = new ArrayList<Pair>();
 
 	public Jeu(String hero, Ressource[][] map) {
@@ -35,9 +39,11 @@ public class Jeu {
 
 		if (joueur.getBle().size() >= 10) {
 			joueur.faireFarine();
-		} else if (joueur.getBois().size() >= 5) {
+		}
+		if (joueur.getBois().size() >= 5) {
 			joueur.faireFeu();
-		} else if (joueur.getPierre() != null && joueur.getFarine() != null
+		}
+		if (joueur.getPierre() != null && joueur.getFarine() != null
 				&& map[coordonnee[0]][coordonnee[1]] == null) {
 			joueur.jeter(joueur.getPierre());
 			map[coordonnee[0]][coordonnee[1]] = new Pierre("pierre");
@@ -50,7 +56,7 @@ public class Jeu {
 			while (l != joueur.getPosition()[0]) {
 				try {
 					joueur.seDeplacer(Direction.HAUT);
-					affichageTest();
+					affichageJeu();
 				} catch (Exception e) {
 				}
 			}
@@ -58,7 +64,7 @@ public class Jeu {
 			while (l != joueur.getPosition()[0]) {
 				try {
 					joueur.seDeplacer(Direction.BAS);
-					affichageTest();
+					affichageJeu();
 				} catch (Exception e) {
 				}
 			}
@@ -68,7 +74,7 @@ public class Jeu {
 			while (c != joueur.getPosition()[1]) {
 				try {
 					joueur.seDeplacer(Direction.GAUCHE);
-					affichageTest();
+					affichageJeu();
 				} catch (Exception e) {
 				}
 			}
@@ -76,7 +82,7 @@ public class Jeu {
 			while (c != joueur.getPosition()[1]) {
 				try {
 					joueur.seDeplacer(Direction.DROITE);
-					affichageTest();
+					affichageJeu();
 				} catch (Exception e) {
 				}
 			}
@@ -102,21 +108,20 @@ public class Jeu {
 	}
 
 	public void comportementPremierePhase() {
+		affichageJeu();
 		for (int l = 0; l <= 9; l++) {
-
 			for (int c = 0; c < 9; c++) {
-
 				verificationJoueur();
 
 				if (l % 2 == 0) {
 					try {
-						affichageTest();
+						affichageJeu();
 						joueur.seDeplacer(Direction.DROITE);
 					} catch (Exception e) {
 					}
 				} else {
 					try {
-						affichageTest();
+						affichageJeu();
 						joueur.seDeplacer(Direction.GAUCHE);
 					} catch (Exception e) {
 					}
@@ -127,7 +132,7 @@ public class Jeu {
 			verificationJoueur();
 
 			try {
-				affichageTest();
+				affichageJeu();
 				joueur.seDeplacer(Direction.BAS);
 			} catch (Exception e) {
 			}
@@ -135,13 +140,15 @@ public class Jeu {
 		}
 	}
 
-	public void comportementDeuxiemePhase() {
+	public int comportementDeuxiemePhase() {
 		for (int i = 0; i < boisCoordonnee.size(); i++) {
 			Pair vTempo = boisCoordonnee.get(i);
 			int l = vTempo.getL();
 			int c = vTempo.getR();
+			if(joueur.getFeu() != null)return 0;
 			deplacementJoueurCoordonnee(l, c);
 		}
+		return 0;
 	}
 
 	public void comportementFinalPhase() {
@@ -157,7 +164,7 @@ public class Jeu {
 	 * Affichage
 	 */
 	
-	public void affichageTest() {
+	public void affichageJeu() {
 		int positionLJoueur = joueur.getPosition()[0];
 		int positionCJoueur = joueur.getPosition()[1];
 		String affichage = "";
@@ -186,10 +193,6 @@ public class Jeu {
 			affichage = "";
 		}
 		joueur.debugJoueur();
-	}
-
-	public Hero getJoueur() {
-		return joueur;
 	}
 
 	public void setJoueur(Hero joueur) {

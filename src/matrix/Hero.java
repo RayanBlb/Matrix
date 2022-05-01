@@ -86,7 +86,7 @@ public class Hero {
 
 	public void prendre(Ressource r) throws ErreurInventaireBoisException,ErreurInventaireBleException,ErreurInventairePierreException{
 		if (r instanceof Ble) {
-			if (ble.size() <= 9) {
+			if (ble.size() <= 9 && farine == null) {
 				ble.add(r);
 				poids += r.getPoids();
 			}else {
@@ -100,7 +100,7 @@ public class Hero {
 				throw new ErreurInventairePierreException(r);
 			}
 		} else if (r instanceof Bois) {
-			if (bois.size() <= 4 && farine != null) {
+			if (bois.size() <= 4 && farine != null && feu == null) {
 				bois.add(r);
 				poids += r.getPoids();
 			}else {
