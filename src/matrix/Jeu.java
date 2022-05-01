@@ -207,6 +207,7 @@ public class Jeu {
 	 */
 	public int comportementDeuxiemePhase() {
 		joueur.setPhase(2);
+		affichageJeu();
 		for (int i = 0; i < boisCoordonnee.size(); i++) {
 			Pair vTempo = boisCoordonnee.get(i);
 			int l = vTempo.getL();
