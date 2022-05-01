@@ -70,7 +70,7 @@ public class Hero {
 	/**
 	 * Fonction qui permet de ce deplacer.
 	 * @param Prend en parametres une direction, les coordonnees du joueur sont modifier en fonction de la direction donner en parametres.
-	 * @throws En cas de sortie de map une erreur est lance.
+	 * @throws ErreurDeplacementException est lance, en cas de sortie de map.
 	 */
 	public void seDeplacer(Direction direction) throws ErreurDeplacementException {
 		switch (direction) {
@@ -106,9 +106,9 @@ public class Hero {
 	 * Fonction qui permet de prendre un objet. La fonction bloque le ramassage de bois tant que la farine n'est pas fabrique.
 	 * Cela permet de ramasser la pierre ainsi que le ble en premier afin de fabriquer de la farine.
 	 * @param Prend en parametres une ressource r.
-	 * @throws Si la farine n'est pas cree impossible de ramasser du bois. ErreurInventaireBoisException est lance.
-	 * @throws Si la farine est cree, il n'est plus necessaire de ramasser du ble. ErreurInventaireBleException est lance.
-	 * @throws Si la farine est cree ou que nous avons deja une pierre sur nous, il n'est plus necessaire de ramasser une pierre. ErreurInventairePierreException est lance.
+	 * @throws ErreurInventaireBoisException est lance, Si la farine n'est pas cree impossible de ramasser du bois. 
+	 * @throws ErreurInventaireBleException est lance, Si la farine est cree, il n'est plus necessaire de ramasser du ble.
+	 * @throws ErreurInventairePierreException est lance. Si la farine est cree ou que nous avons deja une pierre sur nous, il n'est plus necessaire de ramasser une pierre. 
 	 */
 	public void prendre(Ressource r) throws ErreurInventaireBoisException,ErreurInventaireBleException,ErreurInventairePierreException{
 		if (r instanceof Ble) {
