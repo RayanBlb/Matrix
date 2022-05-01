@@ -21,14 +21,12 @@ public class Terrain {
         matrix6 [6][6] = new Pierre("Jacques");
         matrix6 [3][1] = new Bois("bois31");
         matrix6 [4][8] = new Bois("bois48");
-        
         matrix6 [1][0] = new Bois("bois48");
         matrix6 [1][2] = new Bois("bois48");
         matrix6 [0][1] = new Bois("bois48");
         matrix6 [0][3] = new Bois("bois48");
         matrix6 [0][5] = new Bois("bois48");
         matrix6 [0][7] = new Bois("bois48");
-        
         matrix6 [6][2] = new Bois("bois48");
         matrix6 [6][1] = new Bois("bois48");
         matrix6 [6][3] = new Bois("bois48");

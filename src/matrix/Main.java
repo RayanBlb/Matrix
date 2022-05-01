@@ -25,6 +25,7 @@ public class Main {
 		boolean error = false;
 
 		System.out.println("Entrer un pseudo :");
+		
 		do {
 			error = false;
 			try {

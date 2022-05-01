@@ -31,6 +31,11 @@ public class Jeu {
 			joueur.setPhase(2);
 			return 2;
 		}
+		
+		if(joueur.getPhase() == 2 && joueur.getFarine() == null) {
+			joueur.setPhase(3);
+			return 3;
+		}
 
 		try {
 			joueur.prendre(map[coordonnee[0]][coordonnee[1]]);
@@ -55,7 +60,7 @@ public class Jeu {
 		return 0;
 	}
 
-	public void deplacementJoueurCoordonnee(int l, int c) {
+	public int deplacementJoueurCoordonnee(int l, int c) {
 
 		if (joueur.getPosition()[0] > l) {
 			while (l != joueur.getPosition()[0]) {
@@ -92,19 +97,20 @@ public class Jeu {
 				}
 			}
 		}
-		verificationJoueur();
+		
+		if(verificationJoueur() == 3)return 3;
+		
+		return 0;
 	}
 
 	public void verificationWin() {
 		if (joueur.fairePain() == true && joueur.getPosition()[0] == 9 && joueur.getPosition()[1] == 9) {
 			System.out.println("Pain fabriqué");
 			System.out.println("You win avec : " + joueur.getNbPartie() + " Coups !!!");
+		}else {
+			System.out.println("You loose avec : " + joueur.getNbPartie() + " Coups !!!");
 		}
 	}
-
-	/**
-	 * Comportement simple Joueur
-	 */
 
 	public void comportementSimpleJoueur() {
 		comportementPremierePhase();
@@ -148,12 +154,13 @@ public class Jeu {
 	}
 
 	public int comportementDeuxiemePhase() {
+		joueur.setPhase(2);
 		for (int i = 0; i < boisCoordonnee.size(); i++) {
 			Pair vTempo = boisCoordonnee.get(i);
 			int l = vTempo.getL();
 			int c = vTempo.getR();
 			if(joueur.getFeu() != null)return 0;
-			deplacementJoueurCoordonnee(l, c);
+			if(deplacementJoueurCoordonnee(l, c) == 3)return 0;
 		}
 		return 0;
 	}
@@ -163,14 +170,6 @@ public class Jeu {
 		deplacementJoueurCoordonnee(9, 9);
 		verificationWin();
 	}
-
-	/**
-	 * Fin comportement Simple
-	 */
-
-	/**
-	 * Affichage
-	 */
 
 	public void affichageJeu() {
 		int positionLJoueur = joueur.getPosition()[0];
