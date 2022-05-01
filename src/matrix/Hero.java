@@ -37,7 +37,7 @@ public class Hero {
 	}
 
 	public void debugJoueur() {
-		System.out.println("nbPartie : " + nbPartie);
+		System.out.println("Nombre de coups : " + nbPartie);
 		System.out.println("Nombre de bois : " + bois.size());
 		System.out.println("Nombre de ble : " + ble.size());
 		System.out.println("Poids : " + poids);
