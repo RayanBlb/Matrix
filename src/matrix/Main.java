@@ -1,10 +1,41 @@
 package matrix;
 
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
-		Jeu jeu = new Jeu("Jean",Terrain.creationTerrain());
-		jeu.jouer();
+		Jeu jeu;
+		
+		System.out.println("Bonjour et bienvenue dans la matrix NEO !!!");
+		String pseudo = enregistrementPseudo();
+		
+		if(pseudo.length() == 0) {
+			jeu = new Jeu("Joueur Inconnu", Terrain.creationTerrain());
+		}else {
+			jeu = new Jeu(pseudo, Terrain.creationTerrain());
+		}
+		
+		jeu.jouer(1);
 	}
+	
+	public static String enregistrementPseudo() {
+		String pseudo = "";
+		Scanner inputClavier;
+		boolean error = false;
 
+		System.out.println("Entrer un pseudo :");
+		do {
+			error = false;
+			try {
+				inputClavier = new Scanner(System.in);
+				pseudo = inputClavier.nextLine();
+			} catch (Exception e) {
+				System.out.println("Vous devez entrer un pseudo !!!");
+				error = true;
+			}
+		} while (error == true);
+		
+		return pseudo;
+	}
 }

@@ -20,8 +20,10 @@ public class Jeu {
 		this.map = map;
 	}
 
-	public void jouer() {
-		comportementSimpleJoueur();
+	public void jouer(int choix) {
+		if(choix == 1) {
+			comportementSimpleJoueur();
+		}
 	}
 
 	public void verificationJoueur() {
