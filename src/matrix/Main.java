@@ -16,7 +16,7 @@ public class Main {
 			jeu = new Jeu(pseudo, Terrain.creationTerrain());
 		}
 		
-		jeu.jouer(1);
+		jeu.jouer();
 	}
 	
 	public static String enregistrementPseudo() {

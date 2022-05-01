@@ -17,9 +17,11 @@ public class Hero {
 	private int poids;
 	private int nbPartie;
 	private int[] position;
+	private int phase;
 
 	public Hero(String nom) {
 		this.nom = nom;
+		this.phase = 0;
 
 		this.ble = new ArrayList<Ressource>();
 		this.bois = new ArrayList<Ressource>();
@@ -38,6 +40,7 @@ public class Hero {
 
 	public void debugJoueur() {
 		System.out.println("Pseudo : " + nom);
+		System.out.println("Phase : " + phase);
 		System.out.println("Nombre de coups : " + nbPartie);
 		System.out.println("Nombre de bois : " + bois.size());
 		System.out.println("Nombre de ble : " + ble.size());
@@ -222,5 +225,13 @@ public class Hero {
 
 	public void setNbPartie(int nbPartie) {
 		this.nbPartie = nbPartie;
+	}
+
+	public int getPhase() {
+		return phase;
+	}
+
+	public void setPhase(int phase) {
+		this.phase = phase;
 	}
 }

@@ -20,14 +20,17 @@ public class Jeu {
 		this.map = map;
 	}
 
-	public void jouer(int choix) {
-		if(choix == 1) {
-			comportementSimpleJoueur();
-		}
+	public void jouer() {
+		comportementSimpleJoueur();
 	}
 
-	public void verificationJoueur() {
+	public int verificationJoueur() {
 		int[] coordonnee = joueur.getPosition();
+		
+		if(joueur.getPhase() == 1 && joueur.getFarine() != null && boisCoordonnee.size() >= 5) {
+			joueur.setPhase(2);
+			return 2;
+		}
 
 		try {
 			joueur.prendre(map[coordonnee[0]][coordonnee[1]]);
@@ -45,11 +48,11 @@ public class Jeu {
 		if (joueur.getBois().size() >= 5) {
 			joueur.faireFeu();
 		}
-		if (joueur.getPierre() != null && joueur.getFarine() != null
-				&& map[coordonnee[0]][coordonnee[1]] == null) {
+		if (joueur.getPierre() != null && joueur.getFarine() != null && map[coordonnee[0]][coordonnee[1]] == null) {
 			joueur.jeter(joueur.getPierre());
 			map[coordonnee[0]][coordonnee[1]] = new Pierre("pierre");
 		}
+		return 0;
 	}
 
 	public void deplacementJoueurCoordonnee(int l, int c) {
@@ -102,18 +105,19 @@ public class Jeu {
 	/**
 	 * Comportement simple Joueur
 	 */
-	
+
 	public void comportementSimpleJoueur() {
 		comportementPremierePhase();
 		comportementDeuxiemePhase();
 		comportementFinalPhase();
 	}
 
-	public void comportementPremierePhase() {
+	public int comportementPremierePhase() {
+		joueur.setPhase(1);
 		affichageJeu();
 		for (int l = 0; l <= 9; l++) {
 			for (int c = 0; c < 9; c++) {
-				verificationJoueur();
+				if(verificationJoueur() == 2)return 0;
 
 				if (l % 2 == 0) {
 					try {
@@ -131,7 +135,7 @@ public class Jeu {
 
 			}
 
-			verificationJoueur();
+			if(verificationJoueur() == 2)return 0;
 
 			try {
 				affichageJeu();
@@ -140,6 +144,7 @@ public class Jeu {
 			}
 
 		}
+		return 0;
 	}
 
 	public int comportementDeuxiemePhase() {
@@ -154,41 +159,42 @@ public class Jeu {
 	}
 
 	public void comportementFinalPhase() {
+		joueur.setPhase(3);
 		deplacementJoueurCoordonnee(9, 9);
 		verificationWin();
 	}
-	
+
 	/**
 	 * Fin comportement Simple
 	 */
-	
+
 	/**
 	 * Affichage
 	 */
-	
+
 	public void affichageJeu() {
 		int positionLJoueur = joueur.getPosition()[0];
 		int positionCJoueur = joueur.getPosition()[1];
 		String affichage = "";
-		
-		for(int l = 0; l <= 9; l++) {
-			for(int c = 0; c <= 9; c++) {
-				if(map[l][c] instanceof Ble && (positionLJoueur != l || positionCJoueur != c)) {
-					affichage = affichage+" B "+" ";
-				}else if(map[l][c] instanceof Ble && positionLJoueur == l && positionCJoueur == c){
-					affichage = affichage+"[B]"+" ";
-				}else if(map[l][c] instanceof Pierre && (positionLJoueur != l || positionCJoueur != c)) {
-					affichage = affichage+" P "+" ";
-				}else if(map[l][c] instanceof Pierre && positionLJoueur == l && positionCJoueur == c) {
-					affichage = affichage+"[P]"+" ";
-				}else if(map[l][c] instanceof Bois && (positionLJoueur != l || positionCJoueur != c)) {
-					affichage = affichage+" W "+" ";
-				}else if(map[l][c] instanceof Bois && positionLJoueur == l && positionCJoueur == c){
-					affichage = affichage+"[W]"+" ";
-				}else if(positionLJoueur == l && positionCJoueur == c){
-					affichage = affichage+"[-]"+" ";
-				}else {
-					affichage = affichage+" - "+" ";
+
+		for (int l = 0; l <= 9; l++) {
+			for (int c = 0; c <= 9; c++) {
+				if (map[l][c] instanceof Ble && (positionLJoueur != l || positionCJoueur != c)) {
+					affichage = affichage + " B " + " ";
+				} else if (map[l][c] instanceof Ble && positionLJoueur == l && positionCJoueur == c) {
+					affichage = affichage + "[B]" + " ";
+				} else if (map[l][c] instanceof Pierre && (positionLJoueur != l || positionCJoueur != c)) {
+					affichage = affichage + " P " + " ";
+				} else if (map[l][c] instanceof Pierre && positionLJoueur == l && positionCJoueur == c) {
+					affichage = affichage + "[P]" + " ";
+				} else if (map[l][c] instanceof Bois && (positionLJoueur != l || positionCJoueur != c)) {
+					affichage = affichage + " W " + " ";
+				} else if (map[l][c] instanceof Bois && positionLJoueur == l && positionCJoueur == c) {
+					affichage = affichage + "[W]" + " ";
+				} else if (positionLJoueur == l && positionCJoueur == c) {
+					affichage = affichage + "[-]" + " ";
+				} else {
+					affichage = affichage + " - " + " ";
 				}
 			}
 			System.out.println(affichage);
