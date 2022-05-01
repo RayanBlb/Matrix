@@ -1,7 +1,19 @@
 package matrix;
 
-public class Terrain {
+/**
+ * Classe Terrain.
+ * Permet de gerer les matrices qui forme le terrain.
+ * @author benlacheheb
+ *
+ */
 
+public class Terrain {
+	
+	/**
+	 * Fonction static qui permet de creer la map du jeu.
+	 * Le code des matrices a tester est a copier coller ici.
+	 * @return Renvoie la map du jeu.
+	 */
 	public static Ressource[][] creationTerrain() {
 		
 		Ressource[][] matrix6 = new Ressource[10][10];

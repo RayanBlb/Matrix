@@ -1,5 +1,12 @@
 package matrix;
 
+/**
+ * Une ressource est définie par un poids et un id.
+ * Une ressource correspond a une pierre, un ble ou encore un bois.
+ * @author benlacheheb
+ *
+ */
+
 public class Ressource {
 
 	private int poids;

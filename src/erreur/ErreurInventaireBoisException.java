@@ -1,5 +1,9 @@
 package erreur;
 
+/**
+ * Classe erreur d'inventaire de bois.
+ * En cas d'impossibilite de recuperer du bois, c'est cette erreur qui est lance.
+ */
 import matrix.Ressource;
 
 public class ErreurInventaireBoisException extends Exception {

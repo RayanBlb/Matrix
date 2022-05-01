@@ -1,5 +1,10 @@
 package outils;
 
+/**
+ * Classe outils pair, permet de creer une pair de int.
+ * @author benlacheheb
+ *
+ */
 public class Pair {
 	private int l;
 	private int r;

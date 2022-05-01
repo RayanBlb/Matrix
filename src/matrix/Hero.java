@@ -7,6 +7,12 @@ import erreur.ErreurInventaireBleException;
 import erreur.ErreurInventaireBoisException;
 import erreur.ErreurInventairePierreException;
 
+/**
+ * Classe Hero.
+ * Classe qui stock toutes les methodes relatives au fonctionnement du Hero.
+ * @author benlacheheb
+ *
+ */
 public class Hero {
 	private String nom;
 	private List<Ressource> ble;
@@ -37,7 +43,10 @@ public class Hero {
 		position[0] = 0;
 		position[1] = 0;
 	}
-
+	
+	/**
+	 * Fonction debug, elle permet d'afficher tous les parametres d'un joueur afin de mieux voir l'avancement du jeu.
+	 */
 	public void debugJoueur() {
 		System.out.println("Pseudo : " + nom);
 		System.out.println("Phase : " + phase);
@@ -57,7 +66,12 @@ public class Hero {
 		}
 		System.out.println("============================================");
 	}
-
+	
+	/**
+	 * Fonction qui permet de ce deplacer.
+	 * @param Prend en parametres une direction, les coordonnees du joueur sont modifier en fonction de la direction donner en parametres.
+	 * @throws En cas de sortie de map une erreur est lance.
+	 */
 	public void seDeplacer(Direction direction) throws ErreurDeplacementException {
 		switch (direction) {
 		case HAUT:
@@ -87,7 +101,15 @@ public class Hero {
 		}
 		nbPartie += 1;
 	}
-
+	
+	/**
+	 * Fonction qui permet de prendre un objet. La fonction bloque le ramassage de bois tant que la farine n'est pas fabrique.
+	 * Cela permet de ramasser la pierre ainsi que le ble en premier afin de fabriquer de la farine.
+	 * @param Prend en parametres une ressource r.
+	 * @throws Si la farine n'est pas cree impossible de ramasser du bois. ErreurInventaireBoisException est lance.
+	 * @throws Si la farine est cree, il n'est plus necessaire de ramasser du ble. ErreurInventaireBleException est lance.
+	 * @throws Si la farine est cree ou que nous avons deja une pierre sur nous, il n'est plus necessaire de ramasser une pierre. ErreurInventairePierreException est lance.
+	 */
 	public void prendre(Ressource r) throws ErreurInventaireBoisException,ErreurInventaireBleException,ErreurInventairePierreException{
 		if (r instanceof Ble) {
 			if (ble.size() <= 9 && farine == null) {
@@ -112,7 +134,11 @@ public class Hero {
 			}
 		}
 	}
-
+	
+	/**
+	 * Permet de jeter le type d'element donner en parametre.
+	 * @param prend en parametre une ressource r.
+	 */
 	public void jeter(Ressource r) {
 		if (r instanceof Pierre) {
 			if (pierre != null) {
@@ -120,14 +146,18 @@ public class Hero {
 				poids -= r.getPoids();
 			}
 		} else if (r instanceof Bois) {
-			bois.remove(bois.size() - 1);
+			bois.remove(bois.size() - 1); //C'est le dernier morceau de bois ajoute a l'inventaire qui est jete.
 			poids -= r.getPoids();
 		} else if (r instanceof Ble) {
-			ble.remove(ble.size() - 1);
+			ble.remove(ble.size() - 1);//C'est le dernier ble ajoute a l'inventaire qui est jete.
 			poids -= r.getPoids();
 		}
 	}
-
+	
+	/**
+	 * Permet de faire du pain.
+	 * @return Retourne le resultat de la fabrication du pain.
+	 */
 	public boolean fairePain() {
 		boolean resultat;
 
@@ -138,7 +168,10 @@ public class Hero {
 		}
 		return resultat;
 	}
-
+	
+	/**
+	 * Permet de faire de la farine si les conditions sont respectees.
+	 */
 	public void faireFarine() {
 		if (ble.size() == 10 && farine == null && pierre != null) {
 			ble.clear();
@@ -146,7 +179,10 @@ public class Hero {
 			poids -= 10;
 		}
 	}
-
+	
+	/**
+	 * permet de faire du feu si les conditions sont respectees.
+	 */
 	public void faireFeu() {
 		if (bois.size() == 5 && feu == null) {
 			bois.clear();

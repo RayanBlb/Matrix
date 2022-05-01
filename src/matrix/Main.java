@@ -1,9 +1,21 @@
 package matrix;
 
 import java.util.Scanner;
-
+/**
+ * Main du programme.
+ * Lance les fonctions qui permette de creer le jeu.
+ * @author benlacheheb
+ *
+ */
 public class Main {
-
+	/**
+	 * Main du programme.
+	 * Recupere le pseudo du joueur.
+	 * Cree l'objet jeu qui est constitue d'un nom de joueur et d'une map.
+	 * Si la taille du pseudo == 0 alors le joueur sera nomme automatiquement "Joueur Inconnu".
+	 * Lance le jeu via la fonction jouer.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Jeu jeu;
 		
@@ -19,6 +31,10 @@ public class Main {
 		jeu.jouer();
 	}
 	
+	/**
+	 * Permet d'enregister le pseudo du joueur.
+	 * @return renvoie le pseudo que le joueur a tape.
+	 */
 	public static String enregistrementPseudo() {
 		String pseudo = "";
 		Scanner inputClavier;

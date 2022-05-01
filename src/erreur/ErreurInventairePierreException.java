@@ -1,5 +1,9 @@
 package erreur;
 
+/**
+ * Classe erreur d'inventaire de pierre.
+ * En cas d'impossibilite de recuperer une pierre, c'est cette erreur qui est lance.
+ */
 import matrix.Ressource;
 
 public class ErreurInventairePierreException extends Exception {

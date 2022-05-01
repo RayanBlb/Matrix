@@ -1,5 +1,12 @@
 package matrix;
 
+/**
+ * Classe qui correspond au objet cree via des ressources.
+ * Le feu ou encore la farine est de type ObjetManufacture.
+ * ObjetManufacture est defini par un type.
+ * @author benlacheheb
+ *
+ */
 public class ObjetManufacture {
 	
 	private String type;
